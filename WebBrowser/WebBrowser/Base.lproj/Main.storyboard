@@ -1,24 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WebBrowser" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfU-eL-c7U">
+                                <rect key="frame" x="0.0" y="93" width="414" height="720"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="10W-hU-RMF">
+                                <rect key="frame" x="10" y="49" width="394" height="34"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="주소를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR1-LV-Ylg">
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="H2g-Xw-ZzY"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zn0-46-em0">
+                                        <rect key="frame" x="319" y="0.0" width="75" height="34"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="IHb-yj-MzL"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="이동">
+                                            <color key="titleColor" name="AccentColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="moveToURL:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rbV-Lp-RRL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XxJ-Rq-0kU">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem image="chevron.backward" catalog="system" id="7j0-C7-juB">
+                                        <connections>
+                                            <action selector="moveBackwards:" destination="BYZ-38-t0r" id="93b-NT-YWx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="aYB-dB-Owz"/>
+                                    <barButtonItem image="chevron.right" catalog="system" id="BUF-ot-D9o">
+                                        <connections>
+                                            <action selector="moveForwards:" destination="BYZ-38-t0r" id="j1k-S5-b3B"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="yuR-2i-inM"/>
+                                    <barButtonItem systemItem="refresh" id="aj4-jL-LuM">
+                                        <connections>
+                                            <action selector="refresh:" destination="BYZ-38-t0r" id="hyW-xc-9vA"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XfU-eL-c7U" secondAttribute="trailing" id="2of-9X-xo2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="10W-hU-RMF" secondAttribute="trailing" constant="10" id="4Sh-7q-CaU"/>
+                            <constraint firstItem="XfU-eL-c7U" firstAttribute="top" secondItem="10W-hU-RMF" secondAttribute="bottom" constant="10" id="85Y-Va-RaM"/>
+                            <constraint firstItem="XxJ-Rq-0kU" firstAttribute="top" secondItem="XfU-eL-c7U" secondAttribute="bottom" id="q2q-Oe-489"/>
+                            <constraint firstItem="XfU-eL-c7U" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rEy-sS-MAF"/>
+                            <constraint firstItem="XxJ-Rq-0kU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rQb-gI-yp1"/>
+                            <constraint firstItem="10W-hU-RMF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="rXc-wr-bb8"/>
+                            <constraint firstItem="XxJ-Rq-0kU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="uRI-r5-twN"/>
+                            <constraint firstItem="XxJ-Rq-0kU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="vXy-Zg-Qpt"/>
+                            <constraint firstItem="10W-hU-RMF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="vnG-Bt-jZV"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="moveBackwardsButton" destination="7j0-C7-juB" id="Opi-Wo-M4U"/>
+                        <outlet property="moveForwardButton" destination="BUF-ot-D9o" id="l8G-PI-njD"/>
+                        <outlet property="urlSearchButton" destination="Zn0-46-em0" id="dmJ-qb-EFg"/>
+                        <outlet property="urlTextField" destination="mR1-LV-Ylg" id="Dou-zd-xdB"/>
+                        <outlet property="webView" destination="XfU-eL-c7U" id="DfZ-rf-tPY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="647.20000000000005" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
