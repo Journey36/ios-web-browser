@@ -1,6 +1,8 @@
 import UIKit
 import WebKit
 
+typealias ActionHandler = (UIAlertAction) -> Void
+
 class ViewController: UIViewController {
     //MARK:- IBOutlets
     @IBOutlet weak var webView: WKWebView!
@@ -9,10 +11,12 @@ class ViewController: UIViewController {
     
     //MARK:- IBActions
     @IBAction func moveToURL(_ sender: UIButton) {
-        guard let inputURLString = urlTextField.text else {
+        guard let inputURLString = urlTextField.text,
+              !inputURLString.isEmpty else {
             checkURL()
             return
         }
+
         checkValidation(to: inputURLString)
     }
     
@@ -32,7 +36,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setKeyboardAttribute()
-        self.webView.navigationDelegate = self
+        webView.navigationDelegate = self
         presentHomePage()
     }
 }
@@ -41,27 +45,37 @@ class ViewController: UIViewController {
 //MARK: Methods
 extension ViewController {
     private func presentHomePage() {
-        guard let homeUrl = URL(string: "https://www.naver.com") else { return }
+        let homePage: String = "https://www.naver.com"
+
+        guard let homeUrl = URL(string: homePage) else { return }
+
         let request = URLRequest(url: homeUrl)
         webView.load(request)
     }
+
     private func setKeyboardAttribute() {
         urlTextField.keyboardType = UIKeyboardType.URL
         urlTextField.autocorrectionType = UITextAutocorrectionType.no
         urlTextField.returnKeyType = UIReturnKeyType.go
         urlTextField.clearButtonMode = UITextField.ViewMode.whileEditing
     }
+
+    private func setFirstResponder() -> ActionHandler? {
+        urlTextField.becomeFirstResponder()
+        return nil
+    }
+
     private func checkURL() {
-        let urlCheckingAlert = UIAlertController(title: "경고", message: "주소창에 이동하고자 하는 페이지의 주소를 입력해주세요.", preferredStyle: .alert)
-        let okAction: UIAlertAction = UIAlertAction(title: "확인", style: .default) { _ in
-            self.urlTextField.becomeFirstResponder()
-        }
+        let errorMessage: String = "주소창에 이동하고자 하는 페이지의 주소를 입력해주세요."
+        let urlCheckingAlert = UIAlertController(title: Alert.title, message: errorMessage, preferredStyle: .alert)
+        let okAction: UIAlertAction = UIAlertAction(title: Action.ok, style: .default, handler: setFirstResponder())
         urlCheckingAlert.addAction(okAction)
-        self.present(urlCheckingAlert, animated: true, completion: nil)
+        present(urlCheckingAlert, animated: true, completion: nil)
     }
 
     private func checkValidation(to url: String) {
         let range = NSRange(location: 0, length: url.count)
+
         guard let regExpForValidURL = try? NSRegularExpression(pattern: "http(s)?://") else { return }
 
         if regExpForValidURL.firstMatch(in: url, range: range) != nil {
@@ -70,11 +84,11 @@ extension ViewController {
             urlTextField.endEditing(true)
             webView.load(request)
         } else {
-            let invalidURLAlert = UIAlertController(title: "경고", message: "입력한 주소가 올바른 형태가 아닙니다. http:// 또는 https:// 를 넣은 주소로 입력해주세요.", preferredStyle: .alert)
-            invalidURLAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                self.urlTextField.becomeFirstResponder()
-            }))
-            self.present(invalidURLAlert, animated: true, completion: nil)
+            let errorMessage: String = "입력한 주소가 올바른 형태가 아닙니다. http:// 또는 https:// 를 주소에 포함시켜주세요!"
+            let invalidURLAlert = UIAlertController(title: Alert.title, message: errorMessage, preferredStyle: .alert)
+            let okAction: UIAlertAction = UIAlertAction(title: Action.ok, style: .default, handler: setFirstResponder())
+            invalidURLAlert.addAction(okAction)
+            present(invalidURLAlert, animated: true, completion: nil)
         }
     }
 }
@@ -82,17 +96,17 @@ extension ViewController {
 //MARK: Protocols
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.moveToURL(urlSearchButton)
+        moveToURL(urlSearchButton)
         return true
     }
 }
 
 extension ViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let pageNotFoundAlert = UIAlertController(title: "경고", message: "요청하신 페이지를 찾을 수 없습니다.", preferredStyle: .alert)
-        pageNotFoundAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-            self.urlTextField.becomeFirstResponder()
-        }))
-        self.present(pageNotFoundAlert, animated: true, completion: nil)
+        let errorMessage: String = "요청하신 페이지를 찾을 수 없습니다."
+        let pageNotFoundAlert = UIAlertController(title: Alert.title, message: errorMessage, preferredStyle: .alert)
+        let okAction: UIAlertAction = UIAlertAction(title: Action.ok, style: .default, handler: setFirstResponder())
+        pageNotFoundAlert.addAction(okAction)
+        present(pageNotFoundAlert, animated: true, completion: nil)
     }
 }
