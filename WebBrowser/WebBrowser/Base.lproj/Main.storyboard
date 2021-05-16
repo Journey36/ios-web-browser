@@ -29,18 +29,21 @@
                                 <rect key="frame" x="10" y="49" width="394" height="34"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="주소를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR1-LV-Ylg">
-                                        <rect key="frame" x="0.0" y="0.0" width="317.5" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="H2g-Xw-ZzY"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zn0-46-em0">
-                                        <rect key="frame" x="322.5" y="0.0" width="71.5" height="34"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zn0-46-em0">
+                                        <rect key="frame" x="319" y="0.0" width="75" height="34"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="IHb-yj-MzL"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Go">
+                                        <state key="normal" title="이동">
                                             <color key="titleColor" name="AccentColor"/>
                                         </state>
                                         <connections>
@@ -88,6 +91,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="moveBackwardsButton" destination="7j0-C7-juB" id="Opi-Wo-M4U"/>
+                        <outlet property="moveForwardButton" destination="BUF-ot-D9o" id="l8G-PI-njD"/>
                         <outlet property="urlSearchButton" destination="Zn0-46-em0" id="dmJ-qb-EFg"/>
                         <outlet property="urlTextField" destination="mR1-LV-Ylg" id="Dou-zd-xdB"/>
                         <outlet property="webView" destination="XfU-eL-c7U" id="DfZ-rf-tPY"/>
