@@ -17,43 +17,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zn0-46-em0">
+                                <rect key="frame" x="339" y="52" width="75" height="41"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="E9u-wo-m3d"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="이동">
+                                    <color key="titleColor" name="AccentColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="moveToURL:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rbV-Lp-RRL"/>
+                                </connections>
+                            </button>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfU-eL-c7U">
-                                <rect key="frame" x="0.0" y="93" width="414" height="720"/>
+                                <rect key="frame" x="0.0" y="97" width="414" height="720"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="720" id="ABS-Vb-ZKd"/>
+                                </constraints>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="10W-hU-RMF">
-                                <rect key="frame" x="10" y="49" width="394" height="34"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="주소를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR1-LV-Ylg">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="BYZ-38-t0r" id="H2g-Xw-ZzY"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zn0-46-em0">
-                                        <rect key="frame" x="319" y="0.0" width="75" height="34"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="75" id="IHb-yj-MzL"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="이동">
-                                            <color key="titleColor" name="AccentColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="moveToURL:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rbV-Lp-RRL"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XxJ-Rq-0kU">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <rect key="frame" x="0.0" y="817" width="414" height="45"/>
                                 <items>
                                     <barButtonItem image="chevron.backward" catalog="system" id="7j0-C7-juB">
                                         <connections>
@@ -74,33 +64,47 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="주소를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR1-LV-Ylg">
+                                <rect key="frame" x="8" y="53" width="331" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="5JQ-SY-vBR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="H2g-Xw-ZzY"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XfU-eL-c7U" secondAttribute="trailing" id="2of-9X-xo2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="10W-hU-RMF" secondAttribute="trailing" constant="10" id="4Sh-7q-CaU"/>
-                            <constraint firstItem="XfU-eL-c7U" firstAttribute="top" secondItem="10W-hU-RMF" secondAttribute="bottom" constant="10" id="85Y-Va-RaM"/>
-                            <constraint firstItem="XxJ-Rq-0kU" firstAttribute="top" secondItem="XfU-eL-c7U" secondAttribute="bottom" id="q2q-Oe-489"/>
-                            <constraint firstItem="XfU-eL-c7U" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rEy-sS-MAF"/>
+                            <constraint firstItem="mR1-LV-Ylg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="6pk-Nu-AmV"/>
+                            <constraint firstItem="XfU-eL-c7U" firstAttribute="leading" secondItem="XxJ-Rq-0kU" secondAttribute="leading" id="G64-XS-Cck"/>
+                            <constraint firstItem="XfU-eL-c7U" firstAttribute="trailing" secondItem="XxJ-Rq-0kU" secondAttribute="trailing" id="Nc2-pB-4qS"/>
+                            <constraint firstItem="Zn0-46-em0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="bUr-sh-xJE"/>
+                            <constraint firstItem="Zn0-46-em0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="drn-IN-RC4"/>
+                            <constraint firstItem="mR1-LV-Ylg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="fWj-7B-4l2"/>
+                            <constraint firstItem="XfU-eL-c7U" firstAttribute="top" secondItem="mR1-LV-Ylg" secondAttribute="bottom" constant="4" id="oSP-vL-XQ3"/>
+                            <constraint firstItem="XxJ-Rq-0kU" firstAttribute="top" secondItem="XfU-eL-c7U" secondAttribute="bottom" id="pGf-3C-Hpd"/>
                             <constraint firstItem="XxJ-Rq-0kU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rQb-gI-yp1"/>
-                            <constraint firstItem="10W-hU-RMF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="rXc-wr-bb8"/>
+                            <constraint firstItem="Zn0-46-em0" firstAttribute="leading" secondItem="mR1-LV-Ylg" secondAttribute="trailing" id="tTF-tk-8qf"/>
                             <constraint firstItem="XxJ-Rq-0kU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="uRI-r5-twN"/>
                             <constraint firstItem="XxJ-Rq-0kU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="vXy-Zg-Qpt"/>
-                            <constraint firstItem="10W-hU-RMF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="vnG-Bt-jZV"/>
+                            <constraint firstItem="XfU-eL-c7U" firstAttribute="top" secondItem="Zn0-46-em0" secondAttribute="bottom" constant="4" id="wfB-8q-Bxd"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="moveBackwardsButton" destination="7j0-C7-juB" id="Opi-Wo-M4U"/>
                         <outlet property="moveForwardButton" destination="BUF-ot-D9o" id="l8G-PI-njD"/>
-                        <outlet property="urlSearchButton" destination="Zn0-46-em0" id="dmJ-qb-EFg"/>
-                        <outlet property="urlTextField" destination="mR1-LV-Ylg" id="Dou-zd-xdB"/>
+                        <outlet property="urlSearchButton" destination="Zn0-46-em0" id="0G8-cp-pi6"/>
+                        <outlet property="urlTextField" destination="mR1-LV-Ylg" id="vtc-cG-2Z3"/>
                         <outlet property="webView" destination="XfU-eL-c7U" id="DfZ-rf-tPY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="647.20000000000005" y="133.5832083958021"/>
+            <point key="canvasLocation" x="646.37681159420299" y="133.25892857142856"/>
         </scene>
     </scenes>
     <resources>
