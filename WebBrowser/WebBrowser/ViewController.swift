@@ -8,6 +8,7 @@ final class ViewController: UIViewController {
     @IBOutlet weak var urlSearchButton: UIButton!
     @IBOutlet weak var moveBackwardsButton: UIBarButtonItem!
     @IBOutlet weak var moveForwardButton: UIBarButtonItem!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
     //MARK:- IBActions
     @IBAction func moveToURL(_ sender: UIButton) {
@@ -105,9 +106,14 @@ extension ViewController: WKNavigationDelegate {
         presentErrorAlert(with: .pageNotFound)
     }
 
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        loadingIndicator.startAnimating()
+    }
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         urlTextField.text = webView.url?.absoluteString
         moveBackwardsButton.isEnabled = webView.canGoBack
         moveForwardButton.isEnabled = webView.canGoForward
+        loadingIndicator.stopAnimating()
     }
 }
