@@ -61,9 +61,10 @@ final class ViewController: UIViewController {
     }
 
     private func presentErrorAlert(with errorMessage: ErrorMessage) {
-        let title: String = "경고"
-        let alert: UIAlertController = UIAlertController(title: title, message: errorMessage.rawValue, preferredStyle: .alert)
-        let okAction: UIAlertAction = UIAlertAction(title: title, style: .default) { _ in
+        let title: String = "경고".localized
+        let alert: UIAlertController = UIAlertController(title: title, message: errorMessage.rawValue.localized, preferredStyle: .alert)
+        let ok: String = "확인".localized
+        let okAction: UIAlertAction = UIAlertAction(title: ok, style: .default) { _ in
             self.urlTextField.becomeFirstResponder()
         }
         alert.addAction(okAction)
@@ -115,5 +116,12 @@ extension ViewController: WKNavigationDelegate {
         moveBackwardsButton.isEnabled = webView.canGoBack
         moveForwardButton.isEnabled = webView.canGoForward
         loadingIndicator.stopAnimating()
+    }
+}
+
+extension String {
+    /// Apply `NSLocalizedString` to target string.
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
     }
 }
