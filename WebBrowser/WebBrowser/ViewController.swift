@@ -5,13 +5,14 @@ final class ViewController: UIViewController {
     //MARK:- IBOutlets
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var urlTextField: UITextField!
-    @IBOutlet weak var urlSearchButton: UIButton!
+    @IBOutlet weak var urlSearchButton: UIBarButtonItem!
     @IBOutlet weak var moveBackwardsButton: UIBarButtonItem!
     @IBOutlet weak var moveForwardButton: UIBarButtonItem!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    
     //MARK:- IBActions
-    @IBAction func moveToURL(_ sender: UIButton) {
+    @IBAction func moveToURL(_ sender: UIBarButtonItem) {
         guard var inputURLString = urlTextField.text,
               !inputURLString.isEmpty else {
             presentErrorAlert(with: .emptyURL)
@@ -51,6 +52,8 @@ final class ViewController: UIViewController {
         urlTextField.autocorrectionType = UITextAutocorrectionType.no
         urlTextField.returnKeyType = UIReturnKeyType.go
         urlTextField.clearButtonMode = UITextField.ViewMode.whileEditing
+        urlTextField.adjustsFontForContentSizeCategory = true
+        urlTextField.font = UIFont.preferredFont(forTextStyle: .body)
     }
 
     private func checkValidation(to url: String) -> Bool {
@@ -70,18 +73,30 @@ final class ViewController: UIViewController {
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
     }
+    
+    private func adjustTextFieldLayout() {
+        var frame: CGRect = urlTextField.frame
+        frame.size.width = view.frame.width
+        urlTextField.frame = frame
+    }
 
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setKeyboardAttribute()
         webView.navigationDelegate = self
+        urlTextField.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let homePage: String = "https://www.google.com"
         presentWebPage(homePage)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        adjustTextFieldLayout()
     }
 }
 
