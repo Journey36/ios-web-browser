@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,25 +11,11 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WebBrowser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="WebBrowser" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zn0-46-em0">
-                                <rect key="frame" x="339" y="52" width="75" height="41"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="E9u-wo-m3d"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Move">
-                                    <color key="titleColor" name="AccentColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="moveToURL:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rbV-Lp-RRL"/>
-                                </connections>
-                            </button>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfU-eL-c7U">
                                 <rect key="frame" x="0.0" y="97" width="414" height="716"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -39,27 +24,16 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please enter URL address here." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR1-LV-Ylg">
-                                <rect key="frame" x="8" y="53" width="331" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="5JQ-SY-vBR"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="H2g-Xw-ZzY"/>
-                                </connections>
-                            </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XxJ-Rq-0kU">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem image="chevron.backward" catalog="system" id="7j0-C7-juB">
+                                    <barButtonItem title="Backward" image="chevron.backward" catalog="system" id="7j0-C7-juB">
                                         <connections>
                                             <action selector="moveBackwards:" destination="BYZ-38-t0r" id="93b-NT-YWx"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="aYB-dB-Owz"/>
-                                    <barButtonItem image="chevron.right" catalog="system" id="BUF-ot-D9o">
+                                    <barButtonItem title="Forward" image="chevron.right" catalog="system" id="BUF-ot-D9o">
                                         <connections>
                                             <action selector="moveForwards:" destination="BYZ-38-t0r" id="j1k-S5-b3B"/>
                                         </connections>
@@ -76,33 +50,50 @@
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
                                 <color key="color" systemColor="systemGrayColor"/>
                             </activityIndicatorView>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vp3-J9-Ce8">
+                                <rect key="frame" x="0.0" y="53" width="414" height="44"/>
+                                <items>
+                                    <navigationItem id="MV0-36-vqY">
+                                        <nil key="title"/>
+                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please enter URL address here." textAlignment="natural" minimumFontSize="17" id="l7T-vH-aw0">
+                                            <rect key="frame" x="91.5" y="5" width="231" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <barButtonItem key="rightBarButtonItem" title="Move" image="magnifyingglass" catalog="system" id="YW7-yH-UxU">
+                                            <connections>
+                                                <action selector="moveToURL:" destination="BYZ-38-t0r" id="9vq-Pp-evP"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="mR1-LV-Ylg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="6pk-Nu-AmV"/>
                             <constraint firstItem="ZkX-IK-uHE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8OO-2b-PR1"/>
                             <constraint firstItem="XfU-eL-c7U" firstAttribute="leading" secondItem="XxJ-Rq-0kU" secondAttribute="leading" id="G64-XS-Cck"/>
+                            <constraint firstItem="vp3-J9-Ce8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IDA-d4-0MM"/>
                             <constraint firstItem="XfU-eL-c7U" firstAttribute="trailing" secondItem="XxJ-Rq-0kU" secondAttribute="trailing" id="Nc2-pB-4qS"/>
-                            <constraint firstItem="Zn0-46-em0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="bUr-sh-xJE"/>
+                            <constraint firstItem="vp3-J9-Ce8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="PtK-bS-whm"/>
+                            <constraint firstItem="XfU-eL-c7U" firstAttribute="top" secondItem="vp3-J9-Ce8" secondAttribute="bottom" id="Rj6-92-HOe"/>
+                            <constraint firstItem="vp3-J9-Ce8" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="XcC-WL-Ohy"/>
                             <constraint firstItem="ZkX-IK-uHE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cky-W9-3Uc"/>
-                            <constraint firstItem="Zn0-46-em0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="drn-IN-RC4"/>
-                            <constraint firstItem="mR1-LV-Ylg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="fWj-7B-4l2"/>
-                            <constraint firstItem="XfU-eL-c7U" firstAttribute="top" secondItem="mR1-LV-Ylg" secondAttribute="bottom" constant="4" id="oSP-vL-XQ3"/>
                             <constraint firstItem="XxJ-Rq-0kU" firstAttribute="top" secondItem="XfU-eL-c7U" secondAttribute="bottom" id="pGf-3C-Hpd"/>
                             <constraint firstItem="XxJ-Rq-0kU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rQb-gI-yp1"/>
-                            <constraint firstItem="Zn0-46-em0" firstAttribute="leading" secondItem="mR1-LV-Ylg" secondAttribute="trailing" id="tTF-tk-8qf"/>
                             <constraint firstItem="XxJ-Rq-0kU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="uRI-r5-twN"/>
                             <constraint firstItem="XxJ-Rq-0kU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="vXy-Zg-Qpt"/>
-                            <constraint firstItem="XfU-eL-c7U" firstAttribute="top" secondItem="Zn0-46-em0" secondAttribute="bottom" constant="4" id="wfB-8q-Bxd"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="loadingIndicator" destination="ZkX-IK-uHE" id="Jdi-he-xpD"/>
                         <outlet property="moveBackwardsButton" destination="7j0-C7-juB" id="Opi-Wo-M4U"/>
                         <outlet property="moveForwardButton" destination="BUF-ot-D9o" id="l8G-PI-njD"/>
-                        <outlet property="urlSearchButton" destination="Zn0-46-em0" id="0G8-cp-pi6"/>
-                        <outlet property="urlTextField" destination="mR1-LV-Ylg" id="vtc-cG-2Z3"/>
+                        <outlet property="navigationBar" destination="vp3-J9-Ce8" id="9cf-iU-gbt"/>
+                        <outlet property="urlSearchButton" destination="YW7-yH-UxU" id="esn-hg-hwr"/>
+                        <outlet property="urlTextField" destination="l7T-vH-aw0" id="eMa-uY-aw5"/>
                         <outlet property="webView" destination="XfU-eL-c7U" id="DfZ-rf-tPY"/>
                     </connections>
                 </viewController>
@@ -114,9 +105,7 @@
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

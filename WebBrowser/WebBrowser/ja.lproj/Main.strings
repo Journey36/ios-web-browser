@@ -1,6 +1,12 @@
 
-/* Class = "UIButton"; normalTitle = "이동"; ObjectID = "Zn0-46-em0"; */
-"Zn0-46-em0.normalTitle" = "いどう";
+/* Class = "UIBarButtonItem"; normalTitle = "이동"; ObjectID = "YW7-yH-UxU"; */
+"YW7-yH-UxU.normalTitle" = "いどう";
 
-/* Class = "UITextField"; placeholder = "주소를 입력해주세요."; ObjectID = "mR1-LV-Ylg"; */
-"mR1-LV-Ylg.placeholder" = "住所を入力してください。";
+/* Class = "UITextField"; placeholder = "주소를 입력해주세요."; ObjectID = "l7T-vH-aw0"; */
+"l7T-vH-aw0.placeholder" = "住所を入力してください。";
+
+/* Class = "UIBarbuttonItem"; title = "이전"; ObjectID = "7j0-C7-juB"; */
+"7j0-C7-juB.title" = "バック";
+
+/* Class = "UIBarbuttonItem"; title = "다음"; ObjectID = "BUF-ot-D9o"; */
+"BUF-ot-D9o.title" = "これから";
