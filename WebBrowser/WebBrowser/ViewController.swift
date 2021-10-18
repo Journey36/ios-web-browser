@@ -10,6 +10,7 @@ final class ViewController: UIViewController {
     @IBOutlet weak var moveForwardButton: UIBarButtonItem!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var navigationBar: UINavigationBar!
+    private let refreshControl = UIRefreshControl()
     
     //MARK:- IBActions
     @IBAction func moveToURL(_ sender: UIBarButtonItem) {
@@ -36,6 +37,19 @@ final class ViewController: UIViewController {
 
     @IBAction func refresh(_ sender: Any) {
         webView.reload()
+    }
+
+    @objc private func pullDownRefresh(_ refreshControl: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.webView.reload()
+            refreshControl.endRefreshing()
+        }
+    }
+
+    private func configureRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(pullDownRefresh(_:)), for: .valueChanged)
+        refreshControl.tintColor = .label
+        webView.scrollView.refreshControl = refreshControl
     }
 
     //MARK:- Methods
@@ -84,6 +98,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setKeyboardAttribute()
+        configureRefreshControl()
         webView.navigationDelegate = self
         urlTextField.delegate = self
     }
