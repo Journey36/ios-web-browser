@@ -135,6 +135,7 @@ extension ViewController: UITextFieldDelegate {
 extension ViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         presentErrorAlert(with: .pageNotFound)
+        loadingIndicator.stopAnimating()
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
