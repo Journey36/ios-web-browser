@@ -11,7 +11,7 @@ final class ViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     private let refreshControl = UIRefreshControl()
-    private var isRefreshing = false
+    private var isPullDownRefreshing = false
     
     //MARK:- IBActions
     @IBAction func moveToURL(_ sender: UIBarButtonItem) {
@@ -85,8 +85,7 @@ final class ViewController: UIViewController {
     @objc private func pullDownRefresh(_ refreshControl: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             while !self.webView.isLoading {
-                self.isRefreshing = true
-                print(self.isRefreshing)
+                self.isPullDownRefreshing = true
                 self.webView.reload()
             }
 
@@ -145,8 +144,8 @@ extension ViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        if isRefreshing == true {
-            isRefreshing = false
+        if isPullDownRefreshing == true {
+            isPullDownRefreshing = false
             return
         }
 
