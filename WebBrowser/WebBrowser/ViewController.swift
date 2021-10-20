@@ -11,6 +11,7 @@ final class ViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     private let refreshControl = UIRefreshControl()
+    private var isRefreshing = false
     
     //MARK:- IBActions
     @IBAction func moveToURL(_ sender: UIBarButtonItem) {
@@ -37,19 +38,6 @@ final class ViewController: UIViewController {
 
     @IBAction func refresh(_ sender: Any) {
         webView.reload()
-    }
-
-    @objc private func pullDownRefresh(_ refreshControl: UIRefreshControl) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.webView.reload()
-            refreshControl.endRefreshing()
-        }
-    }
-
-    private func configureRefreshControl() {
-        refreshControl.addTarget(self, action: #selector(pullDownRefresh(_:)), for: .valueChanged)
-        refreshControl.tintColor = .label
-        webView.scrollView.refreshControl = refreshControl
     }
 
     //MARK:- Methods
@@ -92,6 +80,24 @@ final class ViewController: UIViewController {
         var frame: CGRect = urlTextField.frame
         frame.size.width = view.frame.width
         urlTextField.frame = frame
+    }
+
+    @objc private func pullDownRefresh(_ refreshControl: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            while !self.webView.isLoading {
+                self.isRefreshing = true
+                print(self.isRefreshing)
+                self.webView.reload()
+            }
+
+            refreshControl.endRefreshing()
+        }
+    }
+
+    private func configureRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(pullDownRefresh(_:)), for: .valueChanged)
+        refreshControl.tintColor = .label
+        webView.scrollView.refreshControl = refreshControl
     }
 
     //MARK:- View life cycle
@@ -139,6 +145,11 @@ extension ViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        if isRefreshing == true {
+            isRefreshing = false
+            return
+        }
+
         loadingIndicator.startAnimating()
     }
 
