@@ -4,6 +4,7 @@
 
 /* Class = "UITextField"; placeholder = "주소를 입력해주세요."; ObjectID = "mR1-LV-Ylg"; */
 "l7T-vH-aw0.placeholder" = "주소를 입력해주세요.";
+"l7T-vH-aw0.accessibilityLabel" = "URL 주소창";
 
 /* Class = "UIBarbuttonItem"; title = "이전"; ObjectID = "7j0-C7-juB"; */
 "7j0-C7-juB.title" = "뒤로";
