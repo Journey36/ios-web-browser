@@ -116,24 +116,6 @@ func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKN
 | :------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <img width="300" alt="주소 자동 변경" src="https://user-images.githubusercontent.com/73573732/138133217-5a449e20-1b63-4bd6-8770-f7abff0c2bde.gif"> |
 |                                                         이동한 페이지의 주소 및 경로 표시                                                          |
-
-#### 해당 부분에서 했던 고민점들
-
-|                          고민                          |
-| :----------------------------------------------------: |
-| 텍스트를 유효한 URL로 만들기 위해서는 어떻게 해야할까? |
-
-```swift
-private func checkValidation(to url: String) -> Bool {
-    let range = NSRange(location: 0, length: url.count)
-    guard let regExpForValidURL = try? NSRegularExpression(pattern: "http(s)://") 
-    	else { return false }
-    
-    return regExpForValidURL.firstMatch(in: url, range: range) != nil 
-		? true : false
-}
-```
-
 <br/>
 
 
@@ -191,35 +173,32 @@ let uploadTimeForKorean = "%d seconds ago".localized(with: 5) // "5분 전"
 
 #### 해당 부분에서 했던 고민점들
 
-| 고민 |      |
-| ---- | ---- |
-|  |      |
+| 고민 |
+| ---- |
+| 접근성을 적용할 때, 주소창과 검색 버튼을 어떤 방식으로 구현하는 것이 좋을까? |
 
+간단하게 UITextField와 UIButton을 UIStackView로 묶어서 구현했었습니다. 그러다 접근성 지원을 생각하던 중, [WWDC17 Design For Everyone](https://developer.apple.com/videos/play/wwdc2017/806/) 영상에서 iOS 11부터 내비게이션 바 또는 탭 바처럼 내부의 아이템의 레이아웃을 개발자 임의로 변경할 수 없는 것들에 대해 특별한 UI를 구현해놨다는 것을 봤습니다. 그래서 만약 사용자가 더 큰 텍스트 사이즈 옵션에서 접근성 사이즈를 사용하고 있다면, 내비게이션 바 또는 탭 바의 버튼을 길게 눌렀을 때 아래 이미지처럼 해당 버튼이 확대되어, 어떤 버튼인지 더 쉽게 알 수 있도록 하는 것이 좋다고 생각했습니다.
 
+<img width="240" alt="accessibility type for english" src="https://user-images.githubusercontent.com/73573732/129690514-1c08379d-3378-4cd5-9c06-ad3e5d582031.png"> <img width="240" alt="accessibility type for korean" src="https://user-images.githubusercontent.com/73573732/129716546-16cb5608-0d23-433c-bba8-e26946b4414f.png"> <img width="240" alt="accessibility type for japanese" src="https://user-images.githubusercontent.com/73573732/129716725-99818104-77da-4345-8e13-5a2d408896d5.png">
+<br/>
 
--   접근성을 적용하려고 할 때, 주소창과 검색 버튼을 어떤 방식으로 구현하는 것이 좋을까?
+| 문제 |
+| ---- |
+| 텍스트 필드가 내비게이션 바 내부에 포함된 경우에는 어떻게 동적으로 크기를 조절할 수 있을까? |
 
-    -   간단하게 UITextField와 UIButton을 UIStackView를 통해 묶어서 구현해도 된다고 생각했습니다. 하지만 접근성을 고려하기 시작했을 때, 어떤 방법이 더 좋을지 고민했습니다. 그러다 [WWDC17 Design For Everyone](https://developer.apple.com/videos/play/wwdc2017/806/) 영상에서 iOS 11부터 내비게이션 바 또는 탭 바처럼 내부의 아이템의 레이아웃을 개발자 임의로 변경할 수 없는 것들에 대해 특별한 UI를 구현해놨다는 것을 봤습니다. 그래서 만약 사용자가 다이나믹 타입의 접근성 사이즈를 사용하고 있다면, 내비게이션 바 또는 탭 바의 버튼을 길게 눌렀을 때 아래 이미지처럼 해당 버튼이 확대되어 어떤 버튼인지 알 수 있도록 구현해봤습니다.
+내비게이션 바 또는 탭 바에서는 오토 레이아웃을 통해 해당 레이아웃을 조절할 수 없게 설정되어있었습니다. 그래서 다이나믹 타입을 적용했을 때 주소창 UI가 깨지는 현상이 발생했습니다. 그래서 뷰가 서브뷰의 레이아웃을 변경하기 직전에 호출되는 `viewWillLayoutSubviews()`에서 주소창의 `frame`을 변경해주는 작업으로 문제를 해결했습니다.
 
-        <img width="240" alt="accessibility type for english" src="https://user-images.githubusercontent.com/73573732/129690514-1c08379d-3378-4cd5-9c06-ad3e5d582031.png"> <img width="240" alt="accessibility type for korean" src="https://user-images.githubusercontent.com/73573732/129716546-16cb5608-0d23-433c-bba8-e26946b4414f.png"> <img width="240" alt="accessibility type for japanese" src="https://user-images.githubusercontent.com/73573732/129716725-99818104-77da-4345-8e13-5a2d408896d5.png">
-
--   텍스트 필드가 내비게이션 바 내부에 포함된 경우에는 어떻게 동적으로 크기를 조절할 수 있을까?
-
-    -   내비게이션 바 또는 탭바에서는 오토 레이아웃을 통해 레이아웃을 조절할 수 없게 설정되어있었습니다. 그래서 다이나믹 타입을 적용했을 때 주소창 UI가 깨지는 현상이 있었습니다. 하지만 뷰가 서브뷰의 레이아웃을 변경하기 직전에 호출되는 `viewWillLayoutSubviews()`에서 주소창의 `frame`을 변경해주는 작업으로 문제를 해결했습니다.
-
-        ```swift
-        private func adjustTextFieldLayout() {
-          var frame: CGRect = urlTextField.frame
-          frame.size.width = view.frame.width
-          urlTextField.frame = frame
-        }
+```swift
+private func adjustTextFieldLayout() {
+	var frame: CGRect = urlTextField.frame
+	frame.size.width = view.frame.width
+	urlTextField.frame = frame
+}
         
-        // ....
+// ....
         
-        override func viewWillLayoutSubviews() {
-          super.viewWillLayoutSubviews()
-          adjustTextFieldLayout()
-        }
-        ```
-
--   Accessibility Insepctor attribute 적용한 것ㅁ
+override func viewWillLayoutSubviews() {
+	super.viewWillLayoutSubviews()
+	adjustTextFieldLayout()
+}
+```
