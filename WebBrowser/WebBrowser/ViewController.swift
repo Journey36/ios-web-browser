@@ -11,7 +11,6 @@ final class ViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     private let refreshControl = UIRefreshControl()
-    private var isPullDownRefreshing = false
     
     //MARK:- IBActions
     @IBAction func moveToURL(_ sender: UIBarButtonItem) {
@@ -82,21 +81,22 @@ final class ViewController: UIViewController {
         urlTextField.frame = frame
     }
 
-    @objc private func pullDownRefresh(_ refreshControl: UIRefreshControl) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            while !self.webView.isLoading {
-                self.isPullDownRefreshing = true
-                self.webView.reload()
-            }
-
-            refreshControl.endRefreshing()
+    @objc private func pullDownRefresh() {
+        DispatchQueue.main.async {
+            self.webView.reload()
         }
     }
 
     private func configureRefreshControl() {
-        refreshControl.addTarget(self, action: #selector(pullDownRefresh(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(pullDownRefresh), for: .valueChanged)
         refreshControl.tintColor = .label
         webView.scrollView.refreshControl = refreshControl
+    }
+
+    private func finishLoading() {
+        if webView.scrollView.refreshControl?.isRefreshing == true {
+            webView.scrollView.refreshControl?.endRefreshing()
+        }
     }
 
     //MARK:- View life cycle
@@ -144,8 +144,7 @@ extension ViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        if isPullDownRefreshing == true {
-            isPullDownRefreshing = false
+        if webView.scrollView.refreshControl?.isRefreshing == true {
             return
         }
 
@@ -156,6 +155,7 @@ extension ViewController: WKNavigationDelegate {
         urlTextField.text = webView.url?.absoluteString
         moveBackwardsButton.isEnabled = webView.canGoBack
         moveForwardButton.isEnabled = webView.canGoForward
+        finishLoading()
         loadingIndicator.stopAnimating()
     }
 }
