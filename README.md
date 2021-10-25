@@ -78,30 +78,12 @@
 func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {...}
 ```
 
-위 메소드에서 `UIActivityIndicatorView`가 애니메이션되도록 구현했기 때문입니다. 즉, `UIRefreshControl`과 연결된 `targetAction` 로직에 의해 새로 페이지가 로드되면서 위 메서드를 다시 호출했기 때문에 이와 같은 현상이 일어난 것입니다. 해결을 위해 '당겨서 새로고침' 상태를 나타내는 `isPullDownRefreshing` 변수를 하나 생성했고, 해당 변수의 값에 따라  `UIRefreshControl`이 동작 중일 때는 해당 델리게이트 메서드가 호출되더라도 바로 반환되도록 구현했습니다.
+위 메소드에서 `UIActivityIndicatorView`가 애니메이션되도록 구현했기 때문입니다. 즉, `UIRefreshControl`과 연결된 `targetAction` 로직에 의해 새로 페이지가 로드되면서 위 메서드를 다시 호출했기 때문에 이와 같은 현상이 일어난 것입니다. 해결을 위해 `UIRefreshControl`이 동작 유무를 알 수 있는 `isRefreshing` 프로퍼티를 통해 확인하는 방법으로 구현했습니다. 만약 `UIRefreshControl`가 동작하고 있다면 해당 메서드를 리턴하고, 아니면 `UIActivityIndicatorView`가 동작하도록 했습니다.
 
 ```swift
-private var isPullDownRefreshing = false
-
-// ...
-
-@objc private func pullDownRefresh(_ refreshControl: UIRefreshControl) {
-	DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-		while !self.webView.isLoading {
-			self.isRefreshing = true
-			self.webView.reload()
-		}
-
-		refreshControl.endRefreshing()
-	}
-}
-
-// ...
-
 func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    if isPullDownRefreshing == true {
-		isPullDownRefreshing = false
-        return
+	if webView.scrollView.refreshControl?.isRefreshing == true {
+		return
 	}
 
 	loadingIndicator.startAnimating()
